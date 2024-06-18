@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block subtitulo %}Página Principal{% endblock %}
+{% block conteudo %}
+   
+    <main class="container my-3">
+        <h1 class="display-5"><b>Livros</b></h1>
+        <hr>
+        {% include "grid_produtos.html" %}
+    </main>
+{% endblock %}
