@@ -4,7 +4,7 @@ from typing import List, Optional
 from models.cliente_model import Cliente
 from models.bibliotecario_model import Bibliotecario
 
-from sql.cliente_sql import *
+from sql.bibliotecario_sql import *
 from util.database import obter_conexao
 
 

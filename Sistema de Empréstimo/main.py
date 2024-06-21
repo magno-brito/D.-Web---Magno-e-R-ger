@@ -22,7 +22,7 @@ app.middleware(middleware_type="http")(atualizar_cookie_autenticacao)
 configurar_excecoes(app)
 app.mount(path="/static", app=StaticFiles(directory="static"), name="static")
 app.include_router(main_routes.router)
-# app.include_router(cliente_routes.router)
+app.include_router(cliente_routes.router)
 app.include_router(bibliotecario_routes.router)
 
 

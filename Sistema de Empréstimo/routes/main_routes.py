@@ -7,7 +7,7 @@ from fastapi.templating import Jinja2Templates
 from dtos.entrar_dto import EntrarDTO
 from dtos.novo_cliente_dto import NovoClienteDTO
 from ler_html import ler_html
-from models.cliente_model import Cliente
+from models.cliente_model import Clientelogado
 from models.bibliotecario_model import Bibliotecario
 from repositories.cliente_repo import ClienteRepo
 from repositories.bibliotecario_repo import BibliotecarioRepo
@@ -28,7 +28,20 @@ def get_html(arquivo: str):
 @router.get("/")
 def get_root(request: Request, bibliotecario_logado: Bibliotecario = Depends(obter_bibliotecario_logado)):
     produtos = ProdutoRepo.obter_todos()
+    return templates.TemplateResponse("principal.html", {"request": request, "produtos": produtos, "bibliotecario": bibliotecario_logado})
+
+
+@router.get("/livros")
+def get_livros(request: Request, bibliotecario_logado: Bibliotecario = Depends(obter_bibliotecario_logado)):
+    produtos = ProdutoRepo.obter_todos()
     return templates.TemplateResponse("index.html", {"request": request, "produtos": produtos, "bibliotecario": bibliotecario_logado})
+
+@router.get("/emprestimo")
+def get_emprestimo(request: Request, bibliotecario_logado: Bibliotecario = Depends(obter_bibliotecario_logado)):
+    produtos = ProdutoRepo.obter_todos()
+    return templates.TemplateResponse("emprestimo.html", {"request": request, "produtos": produtos, "bibliotecario": bibliotecario_logado})
+
+
 
 # @router.get("/")
 # def get_root(request: Request, cliente_logado: Cliente = Depends(obter_cliente_logado)):
@@ -46,8 +59,8 @@ def get_cadastro(request: Request, bibliotecario_logado: Bibliotecario = Depends
     return templates.TemplateResponse("cadastro.html", {"request": request, "bibliotecario": bibliotecario_logado})
 
 @router.get("/entrar")
-def get_entrar(request: Request, bibliotecario_logado: Bibliotecario = Depends(obter_bibliotecario_logado)):
-    return templates.TemplateResponse("entrar.html", {"request": request, "bibliotecario": bibliotecario_logado})
+def get_entrar(request: Cliente,  cliente_logado_logado: Cliente = Depends(obter_cliente_logado)):
+    return templates.TemplateResponse("entrar.html", {"request": request, "cliente": cliente_logado})
 
 @router.get("/produto/{id:int}")
 def get_produto(request: Request, id: int, bibliotecario_logado: Bibliotecario = Depends(obter_bibliotecario_logado)):
