@@ -8,7 +8,7 @@ SQL_CRIAR_TABELA = """
         telefone TEXT NOT NULL UNIQUE,
         email TEXT NOT NULL UNIQUE,
         senha TEXT NOT NULL,
-        admin BOOLEAN NOT NULL,
+        admin INTEGER NOT NULL DEFAULT 0,
         token TEXT)
 """
 

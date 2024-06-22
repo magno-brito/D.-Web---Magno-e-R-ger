@@ -1,4 +1,4 @@
-from pydantic import BaseModel, field_validator
+from pydantic import BaseModel, Field, field_validator
 from datetime import date, datetime, timedelta
 
 from util.validators import *
@@ -13,6 +13,7 @@ class NovoClienteDTO(BaseModel):
     email: str
     senha: str
     confirmacao_senha: str
+    admin: bool = Field(default=False)
 
     @field_validator("nome")
     def validar_nome(cls, v):

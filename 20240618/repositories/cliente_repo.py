@@ -29,7 +29,7 @@ class ClienteRepo:
                         cliente.telefone,
                         cliente.email,
                         cliente.senha,
-                        cliente.admin,
+                        1 if cliente.admin else 0
                     ),
                 )
                 if cursor.rowcount > 0:
@@ -167,6 +167,21 @@ class ClienteRepo:
             print(ex)
             return False
 
+    # @classmethod
+    # def obter_por_email(cls, email: str) -> Optional[Cliente]:
+    #     try:
+    #         with obter_conexao() as conexao:
+    #             cursor = conexao.cursor()
+    #             tupla = cursor.execute(SQL_OBTER_POR_EMAIL, (email,)).fetchone()
+    #             if tupla:
+    #                 cliente = Cliente(*tupla)
+    #                 return cliente
+    #             else:
+    #                 return None
+    #     except sqlite3.Error as ex:
+    #         print(ex)
+    #         return None
+
     @classmethod
     def obter_por_email(cls, email: str) -> Optional[Cliente]:
         try:
@@ -175,12 +190,56 @@ class ClienteRepo:
                 tupla = cursor.execute(SQL_OBTER_POR_EMAIL, (email,)).fetchone()
                 if tupla:
                     cliente = Cliente(*tupla)
+                    cliente.admin = bool(cliente.admin)  
                     return cliente
                 else:
                     return None
         except sqlite3.Error as ex:
             print(ex)
             return None
+    
+    @classmethod
+    def obter_por_token(cls, token: str) -> Optional[Cliente]:
+        try:
+            with obter_conexao() as conexao:
+                cursor = conexao.cursor()
+                tupla = cursor.execute(SQL_OBTER_POR_TOKEN, (token,)).fetchone()
+                if tupla:
+                    # Unpack the tuple fetched from the database
+                    id, nome, cpf, data_nascimento, endereco, telefone, email, admin = tupla
+                    # Convert admin to boolean
+                    admin = bool(admin)
+                    # Create Cliente object
+                    cliente = Cliente(id=id, nome=nome, cpf=cpf, data_nascimento=data_nascimento,
+                                    endereco=endereco, telefone=telefone, email=email,
+                                    admin=admin, token=token)
+                    print(f"Cliente Admin Status in obter_por_token: {cliente.admin}")  # Debug statement
+                    return cliente
+                else:
+                    return None
+        except sqlite3.Error as ex:
+            print(ex)
+            return None
+
+    # @classmethod
+    # def obter_por_token(cls, token: str) -> Optional[Cliente]:
+    #     try:
+    #         with obter_conexao() as conexao:
+    #             cursor = conexao.cursor()
+    #             tupla = cursor.execute(SQL_OBTER_POR_TOKEN, (token,)).fetchone()
+    #             if tupla:
+    #                 cliente = Cliente(*tupla)
+    #                 cliente.admin = bool(cliente.admin)  # Ensure admin is correctly cast to boolean
+    #                 print(f"Cliente Admin Status in obter_por_token: {cliente.admin}")  # Debug statement
+    #                 return cliente
+    #             else:
+    #                 return None
+    #     except sqlite3.Error as ex:
+    #         print(ex)
+    #         return None
+
+
+    ###################################
 
     @classmethod
     def alterar_token(cls, id: int, token: str) -> bool:
@@ -193,20 +252,20 @@ class ClienteRepo:
             print(ex)
             return False
 
-    @classmethod
-    def obter_por_token(cls, token: str) -> Optional[Cliente]:
-        try:
-            with obter_conexao() as conexao:
-                cursor = conexao.cursor()
-                tupla = cursor.execute(SQL_OBTER_POR_TOKEN, (token,)).fetchone()
-                if tupla:
-                    cliente = Cliente(*tupla)
-                    return cliente
-                else:
-                    return None
-        except sqlite3.Error as ex:
-            print(ex)
-            return None
+    # @classmethod
+    # def obter_por_token(cls, token: str) -> Optional[Cliente]:
+    #     try:
+    #         with obter_conexao() as conexao:
+    #             cursor = conexao.cursor()
+    #             tupla = cursor.execute(SQL_OBTER_POR_TOKEN, (token,)).fetchone()
+    #             if tupla:
+    #                 cliente = Cliente(*tupla)
+    #                 return cliente
+    #             else:
+    #                 return None
+    #     except sqlite3.Error as ex:
+    #         print(ex)
+    #         return None
 
     @classmethod
     def alterar_senha(cls, id: int, senha: str) -> bool:

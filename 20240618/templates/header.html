@@ -11,23 +11,59 @@
         </button>
         {% set pagina_atual = request.url.path %}
         <div class="collapse navbar-collapse" id="menuPrincipal">
+            {% if cliente.admin == True -%}
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if not bibliotecario or not bibliotecario.nome -%}
-                <h1>TESTE</h1>
-                {%- else: -%}
-                <h1>FUNCIONANDO</h1>
-                {%- endif -%}
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/">Principal</a>
+                </li>
 
                 <li  class="nav-item">
-                    <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/">Teste</a>
+                    <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/livros">Livros</a>
                 </li>
+
+                <li  class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/livros">Emprestar</a>
+                </li>
+
+                <li  class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/livros">Emprestimos</a>
+                </li>
+            
+                
+                <li class="nav-item dropdown">
+                    
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
+                        Olá, <b>{{ cliente.nome }}</b>!
+                    </a>
+                    
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item  {{ 'active' if pagina_atual == '/cliente/dados' }}" href="/cliente/dados">Dados Pessoais</a></li>
+                        <li><a class="dropdown-item  {{ 'active' if pagina_atual == '/cliente/senha' }}" href="/cliente/senha">Alterar Senha</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="/cliente/sair">Sair</a></li>
+                    </ul>
+                </li>
+                
+                <!-- <li class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/carrinho' }}" href="/cliente/carrinho">
+                        <i class="bi bi-cart-fill"></i>
+                    </a>
+                </li> -->
+                
+            </ul>
+            {%- else: -%}
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
                 <li class="nav-item">
                     <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/">Principal</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ 'active' if pagina_atual == '/contato' }}" href="/contato">Contato</a>
+
+                <li  class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/' }}" href="/livros">Livros</a>
                 </li>
+               
                 {% if not cliente or not cliente.nome -%}
                 <li class="nav-item">
                     <a class="nav-link {{ 'active' if pagina_atual == '/cadastro' }}" href="/cadastro">Quero me cadastrar!</a>
@@ -38,10 +74,16 @@
                 
 
                 {%- else: -%}
+                <li class="nav-item">
+                    <a class="nav-link {{ 'active' if pagina_atual == '/entrar' }}" href="/cliente/carrinho">Meus Empréstimos</a>
+                </li>
+                
                 <li class="nav-item dropdown">
+                    
                     <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">
                         Olá, <b>{{ cliente.nome }}</b>!
                     </a>
+                    
                     <ul class="dropdown-menu">
                         <li><a class="dropdown-item {{ 'active' if pagina_atual == '/cliente/pedidos' }}" href="/cliente/pedidos">Meus Pedidos</a></li>
                         <li><a class="dropdown-item  {{ 'active' if pagina_atual == '/cliente/dados' }}" href="/cliente/dados">Dados Pessoais</a></li>
@@ -52,13 +94,17 @@
                         <li><a class="dropdown-item" href="/cliente/sair">Sair</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                
+                <!-- <li class="nav-item">
                     <a class="nav-link {{ 'active' if pagina_atual == '/carrinho' }}" href="/cliente/carrinho">
                         <i class="bi bi-cart-fill"></i>
                     </a>
-                </li>
+                </li> -->
                 {%- endif -%}
             </ul>
+            {%- endif -%}
+           
+          
             <form class="d-flex" role="search" action="/buscar" method="get">
                 <input class="form-control me-2" type="search" placeholder="O que deseja buscar?" name="q">
                 <button class="btn btn-secondary" type="submit">Buscar</button>

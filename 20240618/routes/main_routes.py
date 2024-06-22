@@ -3,6 +3,7 @@ from sqlite3 import DatabaseError
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
+from pydantic import ValidationError  # Add this import
 
 from dtos.entrar_dto import EntrarDTO
 from ler_html import ler_html
@@ -66,6 +67,7 @@ async def post_cadastro(cliente_dto: NovoClienteDTO):
     return {"redirect": {"url": "/cadastro_realizado"}}
 
 
+
 @router.get("/cadastro_realizado")
 async def get_cadastro_realizado(request: Request):
     return templates.TemplateResponse(
@@ -101,6 +103,11 @@ async def post_entrar(entrar_dto: EntrarDTO):
             ),
             status_code=status.HTTP_404_NOT_FOUND,
         )
+
+    print(f"Cliente Admin Status in post_entrar: {cliente_entrou.admin}")
+    print(f"Cliente Object: {cliente_entrou}")
+
+
     token = gerar_token()
     if not ClienteRepo.alterar_token(cliente_entrou.id, token):
         raise DatabaseError(

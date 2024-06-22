@@ -10,9 +10,12 @@ from util.cookies import NOME_COOKIE_AUTH, adicionar_cookie_auth
 async def obter_cliente_logado(request: Request) -> Optional[Cliente]:
     try:
         token = request.cookies[NOME_COOKIE_AUTH]
+        print(f"Token: {token}")  # Debug statement
         if token.strip() == "":
             return None
         cliente = ClienteRepo.obter_por_token(token)
+        print(f"Cliente from Token: {cliente}")  # Debug statement
+
         return cliente
     except KeyError:
         return None
@@ -20,6 +23,7 @@ async def obter_cliente_logado(request: Request) -> Optional[Cliente]:
 
 async def middleware_autenticacao(request: Request, call_next):
     cliente = await obter_cliente_logado(request)
+    print(f"Authenticated Cliente: {cliente}") 
     request.state.cliente = cliente
     response = await call_next(request)
     if response.status_code == status.HTTP_303_SEE_OTHER:
