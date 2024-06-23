@@ -10,6 +10,7 @@ from ler_html import ler_html
 from dtos.novo_cliente_dto import NovoClienteDTO
 from models.cliente_model import Cliente
 from repositories.cliente_repo import ClienteRepo
+from repositories.livro_repo import LivroRepo
 from repositories.produto_repo import ProdutoRepo
 from util.auth import (
     conferir_senha,
@@ -31,12 +32,20 @@ async def get_html(arquivo: str):
     return response
 
 
+# @router.get("/")
+# async def get_root(request: Request):
+#     produtos = ProdutoRepo.obter_todos()
+#     return templates.TemplateResponse(
+#         "index.html",
+#         {"request": request, "produtos": produtos},
+#     )
+
 @router.get("/")
 async def get_root(request: Request):
-    produtos = ProdutoRepo.obter_todos()
+    livros = LivroRepo.obter_todos()
     return templates.TemplateResponse(
         "index.html",
-        {"request": request, "produtos": produtos},
+        {"request": request, "livros": livros},
     )
 
 

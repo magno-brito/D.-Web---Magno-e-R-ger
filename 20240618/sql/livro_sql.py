@@ -4,7 +4,7 @@ SQL_CRIAR_TABELA = """
         nome TEXT NOT NULL,
         autor TEXT NOT NULL,
         descricao TEXT NOT NULL,
-        isbn TEXT NOT NULL
+        isbn TEXT NOT NULL)
 """
 
 SQL_INSERIR = """

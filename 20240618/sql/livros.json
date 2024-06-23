@@ -1,0 +1,74 @@
+
+[
+    {
+        "id": 1,
+        "nome": "Dom Quixote",
+        "autor": "Miguel de Cervantes",
+        "descricao": "A história de um cavaleiro que luta contra moinhos de vento.",
+        "isbn": "978-0-14-243723-0"
+    },
+    {
+        "id": 2,
+        "nome": "Moby Dick",
+        "autor": "Herman Melville",
+        "descricao": "A saga do Capitão Ahab e sua obsessão pela baleia branca.",
+        "isbn": "978-0-14-243724-7"
+    },
+    {
+        "id": 3,
+        "nome": "Guerra e Paz",
+        "autor": "Liev Tolstói",
+        "descricao": "Um épico sobre a invasão da Rússia por Napoleão e suas consequências.",
+        "isbn": "978-0-19-923276-5"
+    },
+    {
+        "id": 4,
+        "nome": "Orgulho e Preconceito",
+        "autor": "Jane Austen",
+        "descricao": "A clássica história de amor e mal-entendidos entre Elizabeth Bennet e Mr. Darcy.",
+        "isbn": "978-0-19-953556-6"
+    },
+    {
+        "id": 5,
+        "nome": "O Grande Gatsby",
+        "autor": "F. Scott Fitzgerald",
+        "descricao": "A vida extravagante de Jay Gatsby e sua paixão por Daisy Buchanan.",
+        "isbn": "978-0-7432-7356-5"
+    },
+    {
+        "id": 6,
+        "nome": "1984",
+        "autor": "George Orwell",
+        "descricao": "Uma distopia sobre um regime totalitário e a vigilância constante.",
+        "isbn": "978-0-452-28423-4"
+    },
+    {
+        "id": 7,
+        "nome": "Cem Anos de Solidão",
+        "autor": "Gabriel García Márquez",
+        "descricao": "A saga da família Buendía em Macondo.",
+        "isbn": "978-0-06-088328-7"
+    },
+    {
+        "id": 8,
+        "nome": "A Metamorfose",
+        "autor": "Franz Kafka",
+        "descricao": "A transformação de Gregor Samsa em um inseto gigante.",
+        "isbn": "978-0-14-310524-4"
+    },
+    {
+        "id": 9,
+        "nome": "Crime e Castigo",
+        "autor": "Fiódor Dostoiévski",
+        "descricao": "O dilema moral de um jovem que comete um assassinato.",
+        "isbn": "978-0-14-044913-6"
+    },
+    {
+        "id": 10,
+        "nome": "A Odisséia",
+        "autor": "Homero",
+        "descricao": "A épica viagem de Odisseu de volta para casa após a Guerra de Troia.",
+        "isbn": "978-0-14-026886-7"
+    }
+]
+
