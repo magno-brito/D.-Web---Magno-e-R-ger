@@ -69,6 +69,87 @@
         "autor": "Homero",
         "descricao": "A épica viagem de Odisseu de volta para casa após a Guerra de Troia.",
         "isbn": "978-0-14-026886-7"
+    },
+    {
+        "id": 11,
+        "nome": "A Little Life",
+        "autor": "Hanya Yanagihara",
+        "descricao": "A Little Life follows four college classmates--broke, adrift, and buoyed only by their friendship and ambition",
+        "isbn": "978-0804172707"
+    },
+    {
+        "id": 12,
+        "nome": "Alice no país das maravilhas",
+        "autor": "Lewis Carrol",
+        "descricao": "Alice embarca em uma aventura em uma terra encantada",
+        "isbn": "978-8537801727"
+    },
+    {
+        "id": 13,
+        "nome": "Eva Luna",
+        "autor": "Isabel Allende",
+        "descricao": "Quando ainda era muito jovem, Eva perdeu seus pais. De origem humilde, precisou começar a trabalhar como empregada, mas o seu verdadeiro talento é o dom de contar histórias. ",
+        "isbn": "978-8528624137"
+    },
+    {
+        "id": 14,
+        "nome": "A guerra dos Tronos",
+        "autor": "George R.R. Martin",
+        "descricao": "O verão pode durar décadas. O inverno, toda uma vida. E a guerra dos tronos começou. Como Guardião do Norte, lorde Eddard Stark não fica feliz quando o rei Robert o proclama a nova Mão do Rei. ",
+        "isbn": "978-8556510785"
+    },
+    {
+        "id": 15,
+        "nome": "Pessoas Normais",
+        "autor": "Sally Rooney",
+        "descricao": "Uma história única e envolvente sobre dois jovens que devem enfrentar a eletricidade do primeiro amor em meio às sutilezas das classes sociais e dos problemas familiares. ",
+        "isbn": "978-8535932560"
+    },
+    {
+        "id": 16,
+        "nome": "As benevolentes",
+        "autor": "Jonathan Littel",
+        "descricao": "Um ex-oficial nazista se reinventa anos após a guerra. Um intelectual versado em literatura e filosofia esconde um passado sombrio e monstruoso. ",
+        "isbn": "978-8560281237"
+    },
+    {
+        "id": 17,
+        "nome": "A amiga genial",
+        "autor": "Elena Ferrante",
+        "descricao": "A Série Napolitana, formada por quatro romances, conta a história de duas amigas ao longo de suas vidas.  ",
+        "isbn": "978-8525060600"
+    },
+    {
+        "id": 18,
+        "nome": "História do novo sobrenome",
+        "autor": "Elena Ferrante",
+        "descricao": "Após o repentino desaparecimento de Lila, aos 66 anos, Lenu repassa a vida da amiga, explorando os ecos desta em sua própria existência.",
+        "isbn": " 978-8525061225"
+    },
+
+    {
+        "id": 19,
+        "nome": "História de quem foge e de quem fica",
+        "autor": "Elena Ferrante",
+        "descricao": "No terceiro volume da série napolitana, sequência de História do novo sobrenome, as amigas Lila Cerullo e Elena Greco chegam à fase adulta.",
+        "isbn": "978-8525062505"
+    },
+    {
+        "id": 20,
+        "nome": "História da menina perdida",
+        "autor": "Elena Ferrante",
+        "descricao": "Em História da menina perdida, Lenu retorna ao principal núcleo da série: sua amizade com Lina e o bairro onde cresceu. ",
+        "isbn": "978-8525063106"
+    },
+    {
+        "id": 21,
+        "nome": "13 reason Why",
+        "autor": "Bright Summaries",
+        "descricao": "This engaging summary presents an analysis of Thirteen Reasons Why by Jay Asher, a New York Times-bestselling young adult novel with a difference. ",
+        "isbn": "978-8525063106"
     }
+    
+
+
 ]
 
