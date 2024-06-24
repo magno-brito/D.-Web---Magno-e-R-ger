@@ -4,6 +4,8 @@ from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError  # Add this import
+from fastapi import Form
+
 
 from dtos.entrar_dto import EntrarDTO
 from ler_html import ler_html
@@ -72,6 +74,31 @@ async def get_cadastro_livro(request: Request):
         "cadastrar_livro.html",
         {"request": request},
     )
+
+# @router.post("/cadastrar_livro", response_class=JSONResponse)
+# async def post_cadastrar_livro(livro: Livro):
+#     livro_cadastrado = LivroRepo.inserir(livro)
+#     if not livro_alterado or not livro_alterado.id:
+#         raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
+#     return {"redirect": {"url": "/cadastro_realizado"}}
+
+
+@router.post("/cadastrar_livro")
+async def post_cadastrar_livro(livro: Livro):
+    try:
+        # Save livro details to the database
+        livro_cadastrado = LivroRepo.inserir(livro)
+        if not livro_cadastrado or not livro_cadastrado.id:
+            raise HTTPException(status_code=400, detail="Erro ao cadastrar livro.")
+
+        # Optionally, you can perform additional processing here
+
+        return {"message": "Livro cadastrado com sucesso"}
+    
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Erro ao cadastrar livro: {str(e)}")
+
+
 
 @router.get("/alterar_livro")
 async def get_alterar_livro(request: Request):

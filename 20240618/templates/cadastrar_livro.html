@@ -3,41 +3,43 @@
 {% block conteudo %}
 <h1 class="display-5"><b>Cadastrar Livro</b></h1>
 <hr>
-<form class="row json-form" method="post" action="/post_cadastro">
+
+<form class="row json-form" method="post" action="/cadastrar_livro" >
     <div class="col-12 col-lg-6">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nome" name="nome" placeholder=" ">
+            <input type="text" class="form-control" id="nome" name="nome" placeholder=" "  required>
             <label for="nome">Título</label>
         </div>
-
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="autor" name="autor" placeholder=" ">
+            <input type="text" class="form-control" id="autor" name="autor" placeholder=" " required>
             <label for="autor">Autor</label>
         </div>
-
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="descricao" name="descricao" placeholder=" ">
-            <label for="descricao">Descricao</label>
+            <input type="text" class="form-control" id="descricao" name="descricao" placeholder=" " required>
+            <label for="descricao">Descrição</label>
         </div>
-
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="isbn" name="isbn" placeholder=" ">
+            <input type="text" class="form-control" id="isbn" name="isbn" placeholder=" "  required>
             <label for="isbn">ISBN</label>
         </div>
+        <!-- <div class="form-floating mb-3">
+            <input type="file" class="form-control" id="imagem" name="imagem" placeholder=" ">
+            <label for="imagem">Imagem</label>
+        </div> -->
         <div style="margin-top: 40px; margin-bottom: 20px;">
             <button type="submit" class="btn btn-primary btn-lg">Cadastrar Livro</button>
         </div>
-        
     </div>
     <div class="col-12 col-lg-6">
         <i class="bi bi-file-earmark-image-fill text-primary" style="font-size: 150px;"></i>
-        <div class="mb-3">
-            <label for="formFile" class="form-label">Escolha image para a capa</label>
-            <input class="form-control"   type="file" id="imagem" placeholder="Formulario">
+         <div class="form-floating mb-3">
+            <input type="file" class="form-control" id="imagem" name="imagem" placeholder=" ">
+            <label for="imagem">Imagem</label>
         </div>
-       
     </div>
 </form>
+
+
 <script src="/static/js/formToJson.js"></script>
 <script src="/static/js/inputMasks.js"></script>
 {% endblock %}

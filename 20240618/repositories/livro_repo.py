@@ -28,7 +28,13 @@ class LivroRepo():
                 ))
                 if cursor.rowcount > 0:
                     livro.id = cursor.lastrowid
+                    conexao.commit()
+                    print(f"Livro inserted with ID: {livro.id}")
                     return livro
+                else:
+                    print("Failed to insert livro. No rows affected.")
+                    return None
+                    
         except sqlite3.Error as ex:
             print(ex)
             return None
