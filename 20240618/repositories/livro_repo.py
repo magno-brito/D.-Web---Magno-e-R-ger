@@ -51,7 +51,7 @@ class LivroRepo():
             with obter_conexao() as conexao:
                 cursor = conexao.cursor()
                 cursor.execute(SQL_ALTERAR, (
-                     livro.nome,
+                    livro.nome,
                     livro.autor,
                     livro.descricao,
                     livro.isbn,

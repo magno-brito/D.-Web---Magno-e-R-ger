@@ -28,8 +28,7 @@
             <input type="hidden" name="tp" value="{{ tamanho_pagina }}">            
             <select name="o" class="form-control" onchange="this.form.submit()">
                 <option value="1" {{ 'selected' if ordem == 1 else '' }}>Nome</option>
-                <option value="2" {{ 'selected' if ordem == 2 else '' }}>Menor Preço</option>
-                <option value="3" {{ 'selected' if ordem == 3 else '' }}>Maior Preço</option>
+                <option value="2" {{ 'selected' if ordem == 2 else '' }}>Autor</option>
             </select>
         </form>
     </div>

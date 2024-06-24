@@ -9,6 +9,8 @@ from dtos.entrar_dto import EntrarDTO
 from ler_html import ler_html
 from dtos.novo_cliente_dto import NovoClienteDTO
 from models.cliente_model import Cliente
+from models.livro_model import Livro
+
 from repositories.cliente_repo import ClienteRepo
 from repositories.livro_repo import LivroRepo
 from repositories.produto_repo import ProdutoRepo
@@ -63,6 +65,37 @@ async def get_cadastro(request: Request):
         "cadastro.html",
         {"request": request},
     )
+
+@router.get("/cadastrar_livro")
+async def get_cadastro_livro(request: Request):
+    return templates.TemplateResponse(
+        "cadastrar_livro.html",
+        {"request": request},
+    )
+
+@router.get("/alterar_livro")
+async def get_alterar_livro(request: Request):
+    return templates.TemplateResponse(
+        "alterar_livro.html",
+        {"request": request},
+    )
+
+@router.post("/alterar_livro", response_class=JSONResponse)
+async def post_alterar_livro(livro: Livro):
+    livro_alterado = LivroRepo.alterar(livro)
+    if not livro_alterado or not livro_alterado.id:
+        raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
+    return {"redirect": {"url": "/cadastro_realizado"}}
+
+
+
+@router.get("/excluir_livro")
+async def get_excluir_livro(request: Request):
+    return templates.TemplateResponse(
+        "excluir_livro.html",
+        {"request": request},
+    )
+
 
 
 @router.post("/post_cadastro", response_class=JSONResponse)
@@ -148,14 +181,14 @@ async def get_buscar(
     tp: int = 6,
     o: int = 1,
 ):
-    produtos = ProdutoRepo.obter_busca(q, p, tp, o)
-    qtde_produtos = ProdutoRepo.obter_quantidade_busca(q)
-    qtde_paginas = math.ceil(qtde_produtos / float(tp))
+    livros = LivroRepo.obter_busca(q, p, tp, o)
+    qtde_livros = LivroRepo.obter_quantidade_busca(q)
+    qtde_paginas = math.ceil(qtde_livros / float(tp))
     return templates.TemplateResponse(
         "buscar.html",
         {
             "request": request,
-            "produtos": produtos,
+            "livros": livros,
             "quantidade_paginas": qtde_paginas,
             "tamanho_pagina": tp,
             "pagina_atual": p,
@@ -163,3 +196,28 @@ async def get_buscar(
             "ordem": o,
         },
     )
+
+
+# @router.get("/buscar")
+# async def get_buscar(
+#     request: Request,
+#     q: str,
+#     p: int = 1,
+#     tp: int = 6,
+#     o: int = 1,
+# ):
+#     produtos = ProdutoRepo.obter_busca(q, p, tp, o)
+#     qtde_produtos = ProdutoRepo.obter_quantidade_busca(q)
+#     qtde_paginas = math.ceil(qtde_produtos / float(tp))
+#     return templates.TemplateResponse(
+#         "buscar.html",
+#         {
+#             "request": request,
+#             "produtos": produtos,
+#             "quantidade_paginas": qtde_paginas,
+#             "tamanho_pagina": tp,
+#             "pagina_atual": p,
+#             "termo_busca": q,
+#             "ordem": o,
+#         },
+#     )
