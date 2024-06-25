@@ -1,6 +1,9 @@
 import math
+import os
+
+
 from sqlite3 import DatabaseError
-from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
+from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Query, Request, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError  # Add this import
@@ -10,6 +13,7 @@ from fastapi import Form
 from dtos.entrar_dto import EntrarDTO
 from ler_html import ler_html
 from dtos.novo_cliente_dto import NovoClienteDTO
+from dtos.livro_dto import LivroDTO
 from models.cliente_model import Cliente
 from models.livro_model import Livro
 
@@ -29,6 +33,22 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
 
+###################### Upload da imagem
+
+UPLOAD_FOLDER = os.path.abspath('static/img/livros') 
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+def save_uploaded_file(file: UploadFile, isbn: str) -> str:
+    """Salva o arquivo enviado na pasta static/img/livros com um nome baseado no ISBN"""
+    filename = f"{isbn}_{file.filename}"
+    file_path = os.path.join(UPLOAD_FOLDER, filename)
+    with open(file_path, "wb") as buffer:
+        buffer.write(file.file.read())
+    return filename
+
+
+######################
 
 @router.get("/html/{arquivo}")
 async def get_html(arquivo: str):
@@ -84,19 +104,29 @@ async def get_cadastro_livro(request: Request):
 
 
 @router.post("/cadastrar_livro")
-async def post_cadastrar_livro(livro: Livro):
+async def post_cadastrar_livro(livro: Livro, imagem: UploadFile = File(...)):
     try:
-        # Save livro details to the database
+        
         livro_cadastrado = LivroRepo.inserir(livro)
         if not livro_cadastrado or not livro_cadastrado.id:
             raise HTTPException(status_code=400, detail="Erro ao cadastrar livro.")
+        
+        with open(f"static/img/livros/{livro_cadastrado.id}.png", "wb") as f:
+            f.write(await imagem.read())
+        return {"redirect": {"url": "/cadastro_livro_realizado"}}
 
-        # Optionally, you can perform additional processing here
-
-        return {"message": "Livro cadastrado com sucesso"}
-    
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Erro ao cadastrar livro: {str(e)}")
+
+    # try:
+       
+    #     livro_cadastrado = LivroRepo.inserir(livro)
+    #     if not livro_cadastrado or not livro_cadastrado.id:
+    #         raise HTTPException(status_code=400, detail="Erro ao cadastrar livro.")
+    #     return {"redirect": {"url": "/cadastro_livro_realizado"}}
+    
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=f"Erro ao cadastrar livro: {str(e)}")
 
 
 
@@ -143,6 +173,14 @@ async def get_cadastro_realizado(request: Request):
         "cadastro_confirmado.html",
         {"request": request},
     )
+
+@router.get("/cadastro_livro_realizado")
+async def get_cadastro_realizado(request: Request):
+    return templates.TemplateResponse(
+        "cadastro_livro_confirmado.html",
+        {"request": request},
+    )
+
 
 
 @router.get("/entrar")

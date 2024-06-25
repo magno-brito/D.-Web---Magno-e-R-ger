@@ -1,6 +1,5 @@
 from pydantic import BaseModel, Field, field_validator
 from datetime import date, datetime, timedelta
-
 from util.validators import *
 
 
@@ -9,4 +8,5 @@ class LivroDTO(BaseModel):
     autor: str
     descricao: str
     isbn: str
+   
    
