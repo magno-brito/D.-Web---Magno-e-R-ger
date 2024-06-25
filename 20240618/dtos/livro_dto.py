@@ -8,5 +8,5 @@ class LivroDTO(BaseModel):
     autor: str
     descricao: str
     isbn: str
-   
+    
    

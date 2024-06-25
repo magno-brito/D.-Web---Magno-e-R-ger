@@ -35,19 +35,6 @@ templates = Jinja2Templates(directory="templates")
 
 ###################### Upload da imagem
 
-UPLOAD_FOLDER = os.path.abspath('static/img/livros') 
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
-
-def save_uploaded_file(file: UploadFile, isbn: str) -> str:
-    """Salva o arquivo enviado na pasta static/img/livros com um nome baseado no ISBN"""
-    filename = f"{isbn}_{file.filename}"
-    file_path = os.path.join(UPLOAD_FOLDER, filename)
-    with open(file_path, "wb") as buffer:
-        buffer.write(file.file.read())
-    return filename
-
-
 ######################
 
 @router.get("/html/{arquivo}")
@@ -95,40 +82,17 @@ async def get_cadastro_livro(request: Request):
         {"request": request},
     )
 
-# @router.post("/cadastrar_livro", response_class=JSONResponse)
-# async def post_cadastrar_livro(livro: Livro):
-#     livro_cadastrado = LivroRepo.inserir(livro)
-#     if not livro_alterado or not livro_alterado.id:
-#         raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
-#     return {"redirect": {"url": "/cadastro_realizado"}}
+@router.post("/cadastrar_livro", response_class=JSONResponse)
+async def post_cadastrar_livro(livro: Livro):
+    print(livro.nome)
+    print(livro.autor)
+    livro_cadastrado = LivroRepo.inserir(livro)
+    if not livro_cadastrado or not livro_cadastrado.id:
+        raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
+    return {"redirect": {"url": "/cadastro_livro_realizado"}}
 
 
-@router.post("/cadastrar_livro")
-async def post_cadastrar_livro(livro: Livro, imagem: UploadFile = File(...)):
-    try:
-        
-        livro_cadastrado = LivroRepo.inserir(livro)
-        if not livro_cadastrado or not livro_cadastrado.id:
-            raise HTTPException(status_code=400, detail="Erro ao cadastrar livro.")
-        
-        with open(f"static/img/livros/{livro_cadastrado.id}.png", "wb") as f:
-            f.write(await imagem.read())
-        return {"redirect": {"url": "/cadastro_livro_realizado"}}
-
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Erro ao cadastrar livro: {str(e)}")
-
-    # try:
-       
-    #     livro_cadastrado = LivroRepo.inserir(livro)
-    #     if not livro_cadastrado or not livro_cadastrado.id:
-    #         raise HTTPException(status_code=400, detail="Erro ao cadastrar livro.")
-    #     return {"redirect": {"url": "/cadastro_livro_realizado"}}
-    
-    # except Exception as e:
-    #     raise HTTPException(status_code=500, detail=f"Erro ao cadastrar livro: {str(e)}")
-
-
+########################################
 
 @router.get("/alterar_livro")
 async def get_alterar_livro(request: Request):

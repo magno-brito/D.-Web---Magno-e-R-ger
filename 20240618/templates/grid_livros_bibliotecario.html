@@ -2,9 +2,16 @@
     {% for p in livros %}
     <div class="col">
         <div class="card h-100 ">
+            {%if p.id < 22 -%}
             <a href="/livro/{{p.id}}">
                 <img src="/static/img/livros/{{'{:04d}'.format(p.id)}}.png"  style="height: 300px;"class="card-img-top w-100">
             </a>
+            {%- else-%}
+            <a href="/livro/{{p.id}}">
+                <img src="/static/img/livros/generic.png"  style="height: 300px;"class="card-img-top w-100">
+            </a>
+
+            {%- endif-%}
             <div class="card-body d-flex flex-column">
                 <h5 class="card-title text-center">
                     <a href="/livro/{{p.id}}" class="text-decoration-none text-black">
@@ -24,6 +31,8 @@
         <button id="btnSearch" class="btn btn-primary btn-md center-block" Style="width: 80px;" OnClick="btnSearch_Click" >Alterar</button>
          <button id="btnClear" class="btn btn-danger btn-md center-block" Style="width: 80px;" OnClick="btnClear_Click" >Excluir</button>
      </div>
+
+     
 </div>
              
             </div>
