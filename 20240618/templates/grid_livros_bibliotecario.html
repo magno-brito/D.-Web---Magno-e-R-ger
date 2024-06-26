@@ -28,8 +28,12 @@
                 
                 <div class="row">
     <div class="col-sm-12 text-center">
-        <button id="btnSearch" class="btn btn-primary btn-md center-block" Style="width: 80px;" OnClick="btnSearch_Click" >Alterar</button>
-         <button id="btnClear" class="btn btn-danger btn-md center-block" Style="width: 80px;" OnClick="btnClear_Click" >Excluir</button>
+        <button id="btnSearch" class="btn btn-primary btn-md center-block" Style="width: 80px;"  >
+           <a href="/alterar_livro/{{p.id}}" class="text-white">Alterar</a> 
+        </button>
+        <button id="btnSearch" class="btn btn-danger btn-md center-block" Style="width: 80px;"  >
+            <a href="/excluir_livro/{{p.id}}" class="text-white">Excluir</a> 
+         </button>
      </div>
 
      

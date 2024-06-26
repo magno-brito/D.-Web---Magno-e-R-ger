@@ -213,7 +213,6 @@ class ClienteRepo:
                     cliente = Cliente(id=id, nome=nome, cpf=cpf, data_nascimento=data_nascimento,
                                     endereco=endereco, telefone=telefone, email=email,
                                     admin=admin, token=token)
-                    print(f"Cliente Admin Status in obter_por_token: {cliente.admin}")  # Debug statement
                     return cliente
                 else:
                     return None

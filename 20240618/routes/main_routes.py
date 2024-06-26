@@ -84,8 +84,7 @@ async def get_cadastro_livro(request: Request):
 
 @router.post("/cadastrar_livro", response_class=JSONResponse)
 async def post_cadastrar_livro(livro: Livro):
-    print(livro.nome)
-    print(livro.autor)
+   
     livro_cadastrado = LivroRepo.inserir(livro)
     if not livro_cadastrado or not livro_cadastrado.id:
         raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
@@ -93,29 +92,59 @@ async def post_cadastrar_livro(livro: Livro):
 
 
 ########################################
+@router.get("/alterar_livro/{id}")
+async def get_alterar_livro(request: Request, id: int):
+    livro = LivroRepo.obter_um(id)
+    if not livro:
+        raise HTTPException(status_code=404, detail="Livro não encontrado.")
+   
 
-@router.get("/alterar_livro")
-async def get_alterar_livro(request: Request):
     return templates.TemplateResponse(
         "alterar_livro.html",
-        {"request": request},
+        {"request": request, "livro": livro},
     )
 
 @router.post("/alterar_livro", response_class=JSONResponse)
 async def post_alterar_livro(livro: Livro):
     livro_alterado = LivroRepo.alterar(livro)
+    print("ID>>>>" + str(livro.id))
+    print("NOME>>>>" + livro.nome)
+    print("DESCRICAO>>>>" + livro.descricao)
+    print("AUTOR>>>>" + livro.autor)
+    print("ISBN>>>>" + livro.isbn)
     if not livro_alterado or not livro_alterado.id:
         raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
-    return {"redirect": {"url": "/cadastro_realizado"}}
+    return {"redirect": {"url": "/alterar_livro_realizado"}}
 
 
 
-@router.get("/excluir_livro")
-async def get_excluir_livro(request: Request):
+@router.get("/excluir_livro/{id}")
+async def get_excluir_livro(request: Request, id: int):
+    livro = LivroRepo.obter_um(id)
+    print("ID>>>>" + str(livro.id))
+    print("NOME>>>>" + livro.nome)
+    print("DESCRICAO>>>>" + livro.descricao)
+    print("AUTOR>>>>" + livro.autor)
+    print("ISBN>>>>" + livro.isbn)
+    if not livro:
+        raise HTTPException(status_code=404, detail="Livro não encontrado.")
     return templates.TemplateResponse(
         "excluir_livro.html",
-        {"request": request},
+        {"request": request, "livro": livro},
     )
+
+@router.post("/excluir_livro", response_class=JSONResponse)
+async def post_excluir_livro(livro: Livro):
+    print("ID>>>>" + str(livro.id))
+    print("NOME>>>>" + livro.nome)
+    print("DESCRICAO>>>>" + livro.descricao)
+    print("AUTOR>>>>" + livro.autor)
+    print("ISBN>>>>" + livro.isbn)
+    livro_excluido = LivroRepo.excluir(livro.id)
+    print(livro_excluido)
+    if not livro_excluido :
+        raise HTTPException(status_code=400, detail="Erro ao excluir livro.")
+    return {"redirect": {"url": "/excluir_livro_realizado"}}
 
 
 
@@ -142,6 +171,20 @@ async def get_cadastro_realizado(request: Request):
 async def get_cadastro_realizado(request: Request):
     return templates.TemplateResponse(
         "cadastro_livro_confirmado.html",
+        {"request": request},
+    )
+
+@router.get("/alterar_livro_realizado")
+async def get_alterar_realizado(request: Request):
+    return templates.TemplateResponse(
+        "alterar_livro_confirmado.html",
+        {"request": request},
+    )
+
+@router.get("/excluir_livro_realizado")
+async def get_excluir_realizado(request: Request):
+    return templates.TemplateResponse(
+        "excluir_livro_confirmado.html",
         {"request": request},
     )
 
@@ -175,8 +218,7 @@ async def post_entrar(entrar_dto: EntrarDTO):
             status_code=status.HTTP_404_NOT_FOUND,
         )
 
-    print(f"Cliente Admin Status in post_entrar: {cliente_entrou.admin}")
-    print(f"Cliente Object: {cliente_entrou}")
+    
 
 
     token = gerar_token()

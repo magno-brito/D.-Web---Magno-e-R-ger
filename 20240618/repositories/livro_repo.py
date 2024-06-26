@@ -51,8 +51,25 @@ class LivroRepo():
             print(ex)
             return None
         
+    # @classmethod
+    # def alterar(cls, livro: Livro) -> bool:
+    #     try:
+    #         with obter_conexao() as conexao:
+    #             cursor = conexao.cursor()
+    #             cursor.execute(SQL_ALTERAR, (
+    #                 livro.nome,
+    #                 livro.autor,
+    #                 livro.descricao,
+    #                 livro.isbn,
+    #                 livro.id
+    #             ))
+    #             return(cursor.rowcount > 0)
+    #     except sqlite3.Error as ex:
+    #         print(ex)
+    #         return False
+
     @classmethod
-    def alterar(cls, livro: Livro) -> bool:
+    def alterar(cls, livro: Livro) -> Optional[Livro]:
         try:
             with obter_conexao() as conexao:
                 cursor = conexao.cursor()
@@ -63,10 +80,14 @@ class LivroRepo():
                     livro.isbn,
                     livro.id
                 ))
-                return(cursor.rowcount > 0)
+                if cursor.rowcount > 0:
+                    conexao.commit()
+                    return livro
+                else:
+                    return None
         except sqlite3.Error as ex:
             print(ex)
-            return False
+            return None
         
     @classmethod
     def excluir(cls, id: int) -> bool:

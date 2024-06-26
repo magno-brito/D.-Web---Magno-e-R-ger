@@ -3,36 +3,40 @@
 {% block conteudo %}
 <h1 class="display-5"><b>Alterar Livro</b></h1>
 <hr>
-<form class="row json-form" method="post" action="/post_cadastro">
+<form class="row json-form" method="post" action="/alterar_livro">
     <div class="col-12 col-lg-6">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nome" name="nome" placeholder=" ">
+            <input type="text" class="form-control" id="id" name="id"  value="{{ livro.id }}">
+            <label for="id" value = "{{livro.id}}">Id</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="nome" name="nome"  value="{{ livro.nome }}">
             <label for="nome">Título</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="autor" name="autor" placeholder=" ">
+            <input type="text" class="form-control" id="autor" name="autor" value="{{livro.autor}}">
             <label for="autor">Autor</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="descricao" name="descricao" placeholder=" ">
+            <input type="text" class="form-control" id="descricao" name="descricao" value="{{livro.descricao}}">
             <label for="descricao">Descricao</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="isbn" name="isbn" placeholder=" ">
+            <input type="text" class="form-control" id="isbn" name="isbn" value="{{livro.isbn}}">
             <label for="isbn">ISBN</label>
         </div>
         <div style="margin-top: 40px; margin-bottom: 20px;">
-            <button type="submit" class="btn btn-primary btn-lg">Cadastrar Livro</button>
+            <button type="submit" class="btn btn-primary btn-lg">Alterar Livro</button>
         </div>
         
     </div>
     <div class="col-12 col-lg-6">
         <i class="bi bi-file-earmark-image-fill text-primary" style="font-size: 150px;"></i>
         <div class="mb-3">
-            <label for="formFile" class="form-label">Escolha image para a capa</label>
+            <label for="formFile" class="form-label">Escolha imagem para a capa</label>
             <input class="form-control"   type="file" id="imagem" placeholder="Formulario">
         </div>
        
