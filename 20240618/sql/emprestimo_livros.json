@@ -1,0 +1,16 @@
+[
+    {   "id": 1,
+        "emprestimo_id": 1,
+        "livro_id": 1
+    },
+    {
+        "id": 2,
+        "emprestimo_id": 1,
+        "livro_id": 2
+    },
+    {
+        "id": 3,
+        "emprestimo_id": 1,
+        "livro_id": 3
+    }
+]

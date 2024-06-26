@@ -3,7 +3,11 @@ from fastapi.staticfiles import StaticFiles
 import uvicorn
 from repositories.cliente_repo import ClienteRepo
 from repositories.produto_repo import ProdutoRepo
+from repositories.emprestimo_repo import EmprestimoRepo
+from repositories.emprestimo_livro_repo import EmprestimoLivroRepo
+
 from repositories.livro_repo import LivroRepo
+
 from routes import main_routes, cliente_routes
 from util.auth import middleware_autenticacao
 from util.exceptions import configurar_excecoes
@@ -16,6 +20,13 @@ ClienteRepo.inserir_clientes_json("sql/clientes.json")
 
 LivroRepo.criar_tabela()
 LivroRepo.inserir_livros_json("sql/livros.json")
+
+EmprestimoRepo.criar_tabela()
+EmprestimoRepo.inserir_emprestimo_json("sql/emprestimo.json")
+EmprestimoLivroRepo.criar_tabela()
+EmprestimoLivroRepo.inserir_emprestimo_livro_json("sql/emprestimo_livros.json")
+
+
 
 
 app = FastAPI()

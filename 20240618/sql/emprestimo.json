@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "cliente_id": 1,
+        "data_emprestimo": "2024-06-26"
+    },
+    {
+        "id": 2,
+        "cliente_id": 2,
+        "data_emprestimo": "2024-06-26"
+    }
+    
+    
+]

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block subtitulo %}Emprestar{% endblock %}
+{% block conteudo %}
+<h1 class="display-5"><b>Emprestar Livro</b></h1>
+<hr>
+<form class="row json-form" action="/cadastrar_emprestimo" method="post">
+    <div class="col-12 col-lg-3">
+        <div class="form-floating mb-3">
+            <input type="date" class="form-control" id="data_emprestimo" name="data_emprestimo" placeholder=" ">
+            <label for="data_emprestimo">Data de Empréstimo</label>
+        </div>
+    </div>
+    <div class="col-12 col-lg-3">
+        <div class="form-floating mb-3">
+            <select class="form-select" id="cliente_id" name="cliente_id">
+                {% for cliente in lista_clientes %}
+                <option value="{{ cliente.id }}">{{ cliente.nome }}</option>
+                {% endfor %}
+            </select>
+            <label for="cliente_id">Cliente</label>
+        </div>
+    </div>
+    <div class="col-12 col-lg-3">
+        <div class="form-floating mb-3">
+            <select class="form-select" id="livro_id" name="livro_id">
+                {% for livro in lista_livros %}
+                <option value="{{ livro.id }}">{{ livro.nome }}</option>
+                {% endfor %}
+            </select>
+            <label for="livro_id">Livro</label>
+        </div>
+    </div>
+    <div class="col-12">
+        <button type="submit" class="btn btn-primary">Emprestar</button>
+    </div>
+</form>
+<script src="/static/js/formToJson.js"></script>
+{% endblock %}

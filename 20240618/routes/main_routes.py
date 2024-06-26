@@ -5,6 +5,8 @@ import os
 from sqlite3 import DatabaseError
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Query, Request, status
 from fastapi.responses import HTMLResponse, JSONResponse
+from models.emprestimo_model import Emprestimo
+from repositories.emprestimo_repo import EmprestimoRepo
 from fastapi.templating import Jinja2Templates
 from pydantic import ValidationError  # Add this import
 from fastapi import Form
@@ -15,6 +17,7 @@ from ler_html import ler_html
 from dtos.novo_cliente_dto import NovoClienteDTO
 from dtos.livro_dto import LivroDTO
 from models.cliente_model import Cliente
+from models.emprestimo_model import Emprestimo
 from models.livro_model import Livro
 
 from repositories.cliente_repo import ClienteRepo
@@ -107,11 +110,6 @@ async def get_alterar_livro(request: Request, id: int):
 @router.post("/alterar_livro", response_class=JSONResponse)
 async def post_alterar_livro(livro: Livro):
     livro_alterado = LivroRepo.alterar(livro)
-    print("ID>>>>" + str(livro.id))
-    print("NOME>>>>" + livro.nome)
-    print("DESCRICAO>>>>" + livro.descricao)
-    print("AUTOR>>>>" + livro.autor)
-    print("ISBN>>>>" + livro.isbn)
     if not livro_alterado or not livro_alterado.id:
         raise HTTPException(status_code=400, detail="Erro ao alterar livro.")
     return {"redirect": {"url": "/alterar_livro_realizado"}}
@@ -292,3 +290,39 @@ async def get_buscar(
 #             "ordem": o,
 #         },
 #     )
+
+
+#################################################################
+# Empréstimo
+
+@router.get("/emprestar")
+async def get_emprestar(request: Request):
+    lista_clientes = ClienteRepo.obter_todos()
+    lista_livros = LivroRepo.obter_todos()
+    return templates.TemplateResponse(
+        "emprestar.html",
+        {"request": request, "lista_clientes": lista_clientes, "lista_livros": lista_livros},
+    )
+
+@router.post("/cadastrar_emprestimo", response_class=JSONResponse)
+async def post_cadastrar_emprestimo(emprestimo: Emprestimo):
+    try:
+        # Verifica se o cliente existe
+        cliente = ClienteRepo.obter_um(emprestimo.cliente_id)
+        if not cliente:
+            raise HTTPException(status_code=404, detail=f"Cliente com ID {emprestimo.cliente_id} não encontrado.")
+        
+        # Verifica se o livro existe
+        livro = LivroRepo.obter_um(emprestimo.livro_id)
+        if not livro:
+            raise HTTPException(status_code=404, detail=f"Livro com ID {emprestimo.livro_id} não encontrado.")
+        
+        # Aqui você deve inserir o empréstimo na base de dados
+        # Exemplo de inserção (adaptar conforme sua lógica de banco de dados)
+        # EmprestimoRepo.inserir(emprestimo)
+        EmprestimoRepo.inserir(emprestimo)
+
+        return {"message": f"Empréstimo cadastrado com sucesso para o cliente {cliente.nome} com o livro {livro.nome}"}
+    
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
