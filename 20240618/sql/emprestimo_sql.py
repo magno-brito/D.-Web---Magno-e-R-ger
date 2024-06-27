@@ -15,3 +15,9 @@ VALUES (?, ?)
 SQL_OBTER_QUANTIDADE = """
 SELECT COUNT(*) FROM emprestimo
 """
+
+SQL_OBTER_TODOS = """   
+SELECT * FROM emprestimo
+ORDER BY ID
+
+"""

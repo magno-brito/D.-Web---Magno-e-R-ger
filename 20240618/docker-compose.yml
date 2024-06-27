@@ -1,0 +1,7 @@
+version: '3.8'
+services:
+  web:
+    container_name: livrolandia.cachoeiro.es
+    build: .
+    ports:
+      - "8067:8000"

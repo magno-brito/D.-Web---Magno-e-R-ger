@@ -295,6 +295,22 @@ async def get_emprestar(request: Request):
         {"request": request, "lista_clientes": lista_clientes, "lista_livros": lista_livros},
     )
 
+
+@router.get("/emprestimos")
+async def get_emprestimos(request: Request):
+    lista_emprestimos = EmprestimoRepo.obter_todos()
+    lista_clientes = ClienteRepo.obter_todos()
+    for p in lista_emprestimos:
+        print(p.data_emprestimo)
+    return templates.TemplateResponse(
+        "emprestimos.html",
+        {"request": request,
+        "lista_emprestimos": lista_emprestimos,
+        "lista_clientes": lista_clientes
+        },
+    )
+
+
 @router.get("/cadastro_emprestimo_realizado")
 async def get_cadastro_realizado(request: Request):
     return templates.TemplateResponse(

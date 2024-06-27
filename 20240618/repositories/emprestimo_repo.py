@@ -1,10 +1,10 @@
 import sqlite3
 import json
 
-from typing import Optional
+from typing import Optional, List
 from models.cliente_model import Cliente
 from models.emprestimo_model import Emprestimo
-from sql.emprestimo_sql import SQL_CRIAR_TABELA, SQL_INSERIR, SQL_OBTER_QUANTIDADE
+from sql.emprestimo_sql import *
 from util.database import obter_conexao
 
 class EmprestimoRepo:
@@ -45,6 +45,18 @@ class EmprestimoRepo:
                 cursor = conexao.cursor()
                 tupla = cursor.execute(SQL_OBTER_QUANTIDADE).fetchone()
                 return int(tupla[0])
+        except sqlite3.Error as ex:
+            print(ex)
+            return None
+
+    @classmethod
+    def obter_todos(cls) -> List[Emprestimo]:
+        try:
+            with obter_conexao() as conexao:
+                cursor = conexao.cursor()
+                tuplas = cursor.execute(SQL_OBTER_TODOS).fetchall()
+                emprestimo = [Emprestimo(*t) for t in tuplas]
+                return emprestimo
         except sqlite3.Error as ex:
             print(ex)
             return None

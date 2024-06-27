@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block subtitulo %}Emprestar{% endblock %}
+{% block conteudo %}
+<h1 class="display-5"><b>Emprestimos Cadastrados</b></h1>
+<hr>
+<form class="row json-form" action="/cadastrar_emprestimo" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data de Empréstimo</th>
+                <th>Nome do Cliente</th>
+                <th>Livro</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emprestimo in lista_emprestimos %}
+            <tr>
+                <td>{{ emprestimo.data_emprestimo }}</td>
+                {% for cliente in lista_clientes -%}
+                
+                    {% if cliente.id == emprestimo.cliente_id -%}
+                    <td>{{ cliente.nome }}</td>
+                    {%-else-%}
+                    {%-endif-%}
+
+                {%- endfor-%}
+               
+                <td>{{ emprestimo.livro_nome }}</td>
+                <td>
+                    <button type="submit" formaction="/excluir_emprestimo/{{ emprestimo.id }}" class="btn btn-danger">Excluir</button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</form>
+
+<script src="/static/js/formToJson.js"></script>
+{% endblock %}
