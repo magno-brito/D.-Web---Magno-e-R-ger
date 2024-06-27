@@ -10,4 +10,4 @@ COPY . .
 # Definir a porta em que a aplicação irá rodar
 EXPOSE 8000
 # Comando para executar a aplicação
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8067"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
