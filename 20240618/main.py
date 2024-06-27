@@ -35,5 +35,6 @@ app.middleware(middleware_type="http")(middleware_autenticacao)
 configurar_excecoes(app)
 app.include_router(main_routes.router)
 app.include_router(cliente_routes.router)
-if __name__ == "__main__":
-    uvicorn.run(app="main:app", port=8000, reload=True)
+
+# if __name__ == "__main__":
+#     uvicorn.run(app="main:app", port=8000, reload=True)
