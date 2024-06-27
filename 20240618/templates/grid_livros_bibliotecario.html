@@ -1,6 +1,51 @@
 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 row-cols-xxl-6 g-3 mb-3 ">
     {% for p in livros %}
     <div class="col">
+        {% if p.emprestado==1 -%}
+        <div class="card h-100  bg-secondary">
+            {%if p.id < 22 -%}
+            <a href="/livro/{{p.id}}">
+                <img src="/static/img/livros/{{'{:04d}'.format(p.id)}}.png"  style="height: 300px;"class="card-img-top w-100">
+            </a>
+            {%- else-%}
+            <a href="/livro/{{p.id}}">
+                <img src="/static/img/livros/generic.png"  style="height: 300px;"class="card-img-top w-100">
+            </a>
+
+            {%- endif-%}
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title text-center">
+                    <a href="/livro/{{p.id}}" class="text-decoration-none text-black">
+                        {{p.nome}}
+                    </a>
+                </h5>
+                <p class="card-text text-center texto-3-linhas">
+                    {{p.descricao}}
+                </p>
+                <p class="card-text text-center texto-3-linhas ">
+                    <b>ISBN: {{p.isbn}}</b>
+                </p>
+                <p class="card-text text-center texto-3-linhas text-danger">
+                    <b>EMPRESTADO</b>
+                </p>
+                <hr>
+                
+                <div class="row">
+    <div class="col-sm-12 text-center">
+        <button id="btnSearch" class="btn btn-primary btn-md center-block" Style="width: 80px;"  >
+           <a href="/alterar_livro/{{p.id}}" class="text-white">Alterar</a> 
+        </button>
+        <button id="btnSearch" class="btn btn-danger btn-md center-block" Style="width: 80px;"  >
+            <a href="/excluir_livro/{{p.id}}" class="text-white">Excluir</a> 
+         </button>
+     </div>
+
+     
+</div>
+             
+            </div>
+        </div>
+        {%- else -%}
         <div class="card h-100 ">
             {%if p.id < 22 -%}
             <a href="/livro/{{p.id}}">
@@ -41,6 +86,7 @@
              
             </div>
         </div>
+        {%- endif -%}
     </div>
     {% endfor %}
 </div>

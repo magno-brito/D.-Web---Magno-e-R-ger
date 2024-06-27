@@ -10,3 +10,4 @@ class Livro:
     autor: Optional[str] = None
     descricao: Optional[str] = None
     isbn: Optional[str] = None
+    emprestado: Optional[bool] = False

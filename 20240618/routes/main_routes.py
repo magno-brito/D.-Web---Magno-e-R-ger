@@ -36,23 +36,13 @@ router = APIRouter()
 
 templates = Jinja2Templates(directory="templates")
 
-###################### Upload da imagem
 
-######################
 
 @router.get("/html/{arquivo}")
 async def get_html(arquivo: str):
     response = HTMLResponse(ler_html(arquivo))
     return response
 
-
-# @router.get("/")
-# async def get_root(request: Request):
-#     produtos = ProdutoRepo.obter_todos()
-#     return templates.TemplateResponse(
-#         "index.html",
-#         {"request": request, "produtos": produtos},
-#     )
 
 @router.get("/")
 async def get_root(request: Request):
@@ -251,6 +241,7 @@ async def get_buscar(
     o: int = 1,
 ):
     livros = LivroRepo.obter_busca(q, p, tp, o)
+    print(f'TESTE----------->{livros}')
     qtde_livros = LivroRepo.obter_quantidade_busca(q)
     qtde_paginas = math.ceil(qtde_livros / float(tp))
     return templates.TemplateResponse(
@@ -304,6 +295,14 @@ async def get_emprestar(request: Request):
         {"request": request, "lista_clientes": lista_clientes, "lista_livros": lista_livros},
     )
 
+@router.get("/cadastro_emprestimo_realizado")
+async def get_cadastro_realizado(request: Request):
+    return templates.TemplateResponse(
+        "cadastro_emprestimo_confirmado.html",
+        {"request": request},
+    )
+
+
 @router.post("/cadastrar_emprestimo", response_class=JSONResponse)
 async def post_cadastrar_emprestimo(emprestimo: Emprestimo):
     try:
@@ -312,17 +311,19 @@ async def post_cadastrar_emprestimo(emprestimo: Emprestimo):
         if not cliente:
             raise HTTPException(status_code=404, detail=f"Cliente com ID {emprestimo.cliente_id} não encontrado.")
         
-        # Verifica se o livro existe
         livro = LivroRepo.obter_um(emprestimo.livro_id)
+        print(emprestimo.livro_id)
+        print(livro)
         if not livro:
             raise HTTPException(status_code=404, detail=f"Livro com ID {emprestimo.livro_id} não encontrado.")
         
-        # Aqui você deve inserir o empréstimo na base de dados
-        # Exemplo de inserção (adaptar conforme sua lógica de banco de dados)
-        # EmprestimoRepo.inserir(emprestimo)
+      
         EmprestimoRepo.inserir(emprestimo)
-
-        return {"message": f"Empréstimo cadastrado com sucesso para o cliente {cliente.nome} com o livro {livro.nome}"}
-    
+        livro.emprestado = 1
+        LivroRepo.alterar_emprestimo(livro)
+        if LivroRepo.alterar_emprestimo(livro) is None:
+            raise HTTPException(status_code=400, detail="Erro ao atualizar o status do livro.")
+        
+        return {"redirect": {"url": "/cadastro_emprestimo_realizado"}}    
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))

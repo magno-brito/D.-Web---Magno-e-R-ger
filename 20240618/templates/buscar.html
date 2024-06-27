@@ -3,7 +3,13 @@
 {% block conteudo %}
 <h1 class="display-5"><b>Busca de Livros</b></h1>
 <hr>
+{% if cliente.admin == True -%}
 {% include "paging.html" %}
-{% include "grid_livros.html" %}
+{% include "grid_livros_bibliotecario.html" %}
 {% include "paging.html" %}
+{%- else: -%}
+{% include "grid_livros_cliente.html" %}
+{%- endif -%}
 {% endblock %}
+
+

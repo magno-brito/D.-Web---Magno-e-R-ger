@@ -4,25 +4,35 @@ SQL_CRIAR_TABELA = """
         nome TEXT NOT NULL,
         autor TEXT NOT NULL,
         descricao TEXT NOT NULL,
-        isbn TEXT NOT NULL)
+        isbn TEXT NOT NULL,
+        emprestado BOOLEAN NOT NULL
+
+        )
 """
 
 SQL_INSERIR = """
-    INSERT INTO livro(nome, autor, descricao, isbn)
-    VALUES (?, ?, ?, ?)
+    INSERT INTO livro(nome, autor, descricao, isbn, emprestado)
+    VALUES (?, ?, ?, ?, ?)
 """
 
 SQL_OBTER_TODOS = """
-    SELECT id, nome, autor, descricao, isbn
+    SELECT id, nome, autor, descricao, isbn, emprestado
     FROM livro
     ORDER BY nome
 """
 
 SQL_ALTERAR = """
     UPDATE livro
-    SET nome=?, autor=?, descricao=?, isbn=?
+    SET nome=?, autor=?, descricao=?, isbn=?, emprestado=?
     WHERE id=?
 """
+
+SQL_ALTERAR_EMPRESTIMO = """
+    UPDATE livro
+    SET  emprestado=?
+    WHERE id=?
+"""
+
 
 
 SQL_EXCLUIR = """
@@ -31,7 +41,7 @@ SQL_EXCLUIR = """
 """
 
 SQL_OBTER_UM = """
-    SELECT id, nome, autor, descricao, isbn
+    SELECT id, nome, autor, descricao, isbn, emprestado
     FROM livro
     WHERE id=?
 """
@@ -42,7 +52,7 @@ SQL_OBTER_QUANTIDADE = """
 """
 
 SQL_OBTER_BUSCA = """
-    SELECT id, nome, autor, descricao, isbn
+    SELECT id, nome, autor, descricao, isbn, emprestado
     FROM livro
     WHERE nome LIKE ? OR autor LIKE ?
     ORDER BY nome

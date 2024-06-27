@@ -23,7 +23,8 @@ class LivroRepo():
                     livro.nome,
                     livro.autor,
                     livro.descricao,
-                    livro.isbn
+                    livro.isbn,
+                    livro.emprestado
                     
                 ))
                 if cursor.rowcount > 0:
@@ -78,6 +79,25 @@ class LivroRepo():
                     livro.autor,
                     livro.descricao,
                     livro.isbn,
+                    livro.emprestado,
+                    livro.id
+                ))
+                if cursor.rowcount > 0:
+                    conexao.commit()
+                    return livro
+                else:
+                    return None
+        except sqlite3.Error as ex:
+            print(ex)
+            return None
+        
+    @classmethod
+    def alterar_emprestimo(cls, livro: Livro) -> Optional[Livro]:
+        try:
+            with obter_conexao() as conexao:
+                cursor = conexao.cursor()
+                cursor.execute(SQL_ALTERAR_EMPRESTIMO, (
+                    livro.emprestado,
                     livro.id
                 ))
                 if cursor.rowcount > 0:
