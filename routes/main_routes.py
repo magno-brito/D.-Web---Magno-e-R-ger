@@ -3,12 +3,14 @@ import os
 
 
 from sqlite3 import DatabaseError
-from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, Query, Request, status
+from fastapi import APIRouter,Form, Depends, UploadFile, File, HTTPException, Query, Request, status
 from fastapi.responses import HTMLResponse, JSONResponse
 from models.emprestimo_model import Emprestimo
 from repositories.emprestimo_repo import EmprestimoRepo
+from repositories.emprestimo_livro_repo import EmprestimoLivroRepo
+from models.emprestimo_livro_model import EmprestimoLivro
 from fastapi.templating import Jinja2Templates
-from pydantic import ValidationError  # Add this import
+from pydantic import ValidationError  
 from fastapi import Form
 
 
@@ -299,14 +301,32 @@ async def get_emprestar(request: Request):
 @router.get("/emprestimos")
 async def get_emprestimos(request: Request):
     lista_emprestimos = EmprestimoRepo.obter_todos()
+    lista_livros = LivroRepo.obter_todos()
     lista_clientes = ClienteRepo.obter_todos()
-    for p in lista_emprestimos:
-        print(p.data_emprestimo)
+    lista_emprestimos_livro = EmprestimoLivroRepo.obter_todos()
+    
+    lista_final = []
+
+    for emprestimo in lista_emprestimos:
+        nome = None
+        livro_selecionado = None
+        for cliente in lista_clientes:
+            if emprestimo.id == cliente.id:                    
+                nome = cliente.nome
+        for elivro in lista_emprestimos_livro:
+            if emprestimo.id == elivro.id:
+                for livro in lista_livros:
+                    if livro.id == elivro.emprestimo_id:
+                        livro_selecionado = livro.nome
+        lista_final.append([emprestimo.data_emprestimo,nome,livro_selecionado, emprestimo.id])
+    
+    print(lista_final)
+
+
     return templates.TemplateResponse(
         "emprestimos.html",
         {"request": request,
-        "lista_emprestimos": lista_emprestimos,
-        "lista_clientes": lista_clientes
+        "lista_final":lista_final
         },
     )
 
@@ -322,14 +342,12 @@ async def get_cadastro_realizado(request: Request):
 @router.post("/cadastrar_emprestimo", response_class=JSONResponse)
 async def post_cadastrar_emprestimo(emprestimo: Emprestimo):
     try:
-        # Verifica se o cliente existe
         cliente = ClienteRepo.obter_um(emprestimo.cliente_id)
         if not cliente:
             raise HTTPException(status_code=404, detail=f"Cliente com ID {emprestimo.cliente_id} não encontrado.")
         
+        #Deixe a classe Emprestimo com livro_id porque não encontrei outro jeito. O que de fato vai importar é a classe EmprestimoLivro. De lá que vem a relação de 1 para N
         livro = LivroRepo.obter_um(emprestimo.livro_id)
-        print(emprestimo.livro_id)
-        print(livro)
         if not livro:
             raise HTTPException(status_code=404, detail=f"Livro com ID {emprestimo.livro_id} não encontrado.")
         
@@ -337,9 +355,29 @@ async def post_cadastrar_emprestimo(emprestimo: Emprestimo):
         EmprestimoRepo.inserir(emprestimo)
         livro.emprestado = 1
         LivroRepo.alterar_emprestimo(livro)
+        EmprestimoLivroRepo.inserir(emprestimo.id, livro.id)
         if LivroRepo.alterar_emprestimo(livro) is None:
             raise HTTPException(status_code=400, detail="Erro ao atualizar o status do livro.")
         
         return {"redirect": {"url": "/cadastro_emprestimo_realizado"}}    
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+
+
+@router.get("/excluir_emprestimo/{id}")
+async def get_excluir_empresto(request: Request, id: int):
+    emprestimo = EmprestimoRepo.obter_um(id)
+    # livro = LivroRepo.obter_um(id)
+    # print("ID>>>>" + str(livro.id))
+    # print("NOME>>>>" + livro.nome)
+    # print("DESCRICAO>>>>" + livro.descricao)
+    # print("AUTOR>>>>" + livro.autor)
+    # print("ISBN>>>>" + livro.isbn)
+    if not emprestimo:
+        raise HTTPException(status_code=404, detail="Empréstimo não encontrado.")
+    return templates.TemplateResponse(
+        "excluir_emprestimo.html",
+        {"request": request, "livro": livro},
+    )

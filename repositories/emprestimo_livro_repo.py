@@ -5,7 +5,7 @@ from models.emprestimo_model import Emprestimo
 from models.emprestimo_livro_model import EmprestimoLivro
 from models.cliente_model import Cliente
 
-from sql.emprestimo_livro_sql import SQL_INSERIR, SQL_CRIAR_TABELA, SQL_OBTER_QUANTIDADE
+from sql.emprestimo_livro_sql import *
 from util.database import obter_conexao
 
 class EmprestimoLivroRepo:
@@ -57,3 +57,18 @@ class EmprestimoLivroRepo:
         except sqlite3.Error as ex:
             print(ex)
             return None
+
+    @classmethod
+    def obter_todos(cls) -> List[EmprestimoLivro]:
+        try:
+            with obter_conexao() as conexao:
+                cursor = conexao.cursor()
+                tuplas = cursor.execute(SQL_OBTER_TODOS).fetchall()
+
+                emprestimos = [EmprestimoLivro(*t) for t in tuplas]
+              
+                return emprestimos
+        except sqlite3.Error as ex:
+            print(ex)
+            return None
+

@@ -17,7 +17,8 @@ SELECT COUNT(*) FROM emprestimo
 """
 
 SQL_OBTER_TODOS = """   
-SELECT * FROM emprestimo
-ORDER BY ID
+SELECT id, cliente_id, data_emprestimo 
+FROM emprestimo
+ORDER BY id
 
 """

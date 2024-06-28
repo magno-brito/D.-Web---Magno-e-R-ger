@@ -24,10 +24,9 @@
         <div class="form-floating mb-3">
             <select class="form-select" id="livro_id" name="livro_id">
                 {% for livro in lista_livros %}
-                    {% if livro.emprestado == 0 -%}
+                   
                         <option value="{{ livro.id }}">{{ livro.nome }}</option>
-                    {%-else-%}
-                    {%- endif -%}
+                    
                 {% endfor %}
             </select>
             <label for="livro_id">Livro</label>
