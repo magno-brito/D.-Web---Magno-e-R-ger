@@ -1,33 +1,32 @@
 {% extends "base.html" %}
 {% block subtitulo %}Emprestar{% endblock %}
 {% block conteudo %}
-<h1 class="display-5"><b>Emprestimos Cadastrados</b></h1>
+<h1 class="display-5"><b>Empréstimos Cadastrados</b></h1>
 <hr>
-<form class="row json-form" action="/cadastrar_emprestimo" method="post">
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Data de Empréstimo</th>
-                <th>Nome do Cliente</th>
-                <th>Livro</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for emprestimo in lista_final %}
-            <tr>
-                
-                <td>{{emprestimo[0]}}</td>
-                <td>{{emprestimo[1]}}</td>
-                <td>{{emprestimo[2]}}</td>
-                <td>
-                    <button type="submit" formaction="/excluir_emprestimo/{{ emprestimo[4] }}" class="btn btn-danger">Excluir</button>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data de Empréstimo</th>
+            <th>Nome do Cliente</th>
+            <th>Livro</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for emprestimo in lista_final %}
+        <tr>
+            <td>{{ emprestimo[0] }}</td>
+            <td>{{ emprestimo[1] }}</td>
+            <td>{{ emprestimo[2] }}</td>
+            <td>
+                <form action="/excluir_emprestimo/{{emprestimo[3]}}" method="get">
+                    <button type="submit" class="btn btn-danger">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
 <script src="/static/js/formToJson.js"></script>
 {% endblock %}

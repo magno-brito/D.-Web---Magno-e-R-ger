@@ -61,4 +61,27 @@ class EmprestimoRepo:
             print(ex)
             return None
 
+    @classmethod
+    def obter_um(cls, id: int) -> Optional[Emprestimo]:
+        try:
+            with obter_conexao() as conexao:
+                cursor = conexao.cursor()
+                tupla = cursor.execute(SQL_OBTER_UM, (id,)).fetchone()
+                emprestimo = Emprestimo(*tupla)
+                return emprestimo
+        except sqlite3.Error as ex:
+            print(ex)
+            return None
+
+    @classmethod
+    def excluir(cls, id: int) -> bool:
+        try:
+            with obter_conexao() as conexao:
+                cursor = conexao.cursor()
+                cursor.execute(SQL_EXCLUIR, (id,))
+                return cursor.rowcount > 0
+        except sqlite3.Error as ex:
+            print(ex)
+            return False
+
 

@@ -22,3 +22,15 @@ FROM emprestimo
 ORDER BY id
 
 """
+
+SQL_OBTER_UM = """
+    SELECT id, cliente_id, data_emprestimo
+    FROM emprestimo
+    WHERE id=?
+"""
+
+SQL_EXCLUIR = """
+    DELETE FROM emprestimo
+    WHERE id=?
+
+"""

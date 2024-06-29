@@ -111,11 +111,6 @@ async def post_alterar_livro(livro: Livro):
 @router.get("/excluir_livro/{id}")
 async def get_excluir_livro(request: Request, id: int):
     livro = LivroRepo.obter_um(id)
-    print("ID>>>>" + str(livro.id))
-    print("NOME>>>>" + livro.nome)
-    print("DESCRICAO>>>>" + livro.descricao)
-    print("AUTOR>>>>" + livro.autor)
-    print("ISBN>>>>" + livro.isbn)
     if not livro:
         raise HTTPException(status_code=404, detail="Livro não encontrado.")
     return templates.TemplateResponse(
@@ -125,10 +120,6 @@ async def get_excluir_livro(request: Request, id: int):
 
 @router.post("/excluir_livro", response_class=JSONResponse)
 async def post_excluir_livro(livro: Livro):
-    print("ID>>>>" + str(livro.id))
-    print("NOME>>>>" + livro.nome)
-    print("DESCRICAO>>>>" + livro.descricao)
-    print("AUTOR>>>>" + livro.autor)
     print("ISBN>>>>" + livro.isbn)
     livro_excluido = LivroRepo.excluir(livro.id)
     print(livro_excluido)
@@ -365,19 +356,46 @@ async def post_cadastrar_emprestimo(emprestimo: Emprestimo):
 
 
 
-
 @router.get("/excluir_emprestimo/{id}")
-async def get_excluir_empresto(request: Request, id: int):
+async def get_excluir_emprestimo(request: Request, id: int):
     emprestimo = EmprestimoRepo.obter_um(id)
-    # livro = LivroRepo.obter_um(id)
-    # print("ID>>>>" + str(livro.id))
-    # print("NOME>>>>" + livro.nome)
-    # print("DESCRICAO>>>>" + livro.descricao)
-    # print("AUTOR>>>>" + livro.autor)
-    # print("ISBN>>>>" + livro.isbn)
     if not emprestimo:
         raise HTTPException(status_code=404, detail="Empréstimo não encontrado.")
     return templates.TemplateResponse(
         "excluir_emprestimo.html",
-        {"request": request, "livro": livro},
+        {"request": request, "emprestimo": emprestimo},
+    )
+
+
+
+
+@router.post("/excluir_emprestimo", response_class=JSONResponse)
+async def post_excluir_emprestimo(emprestimo: Emprestimo):
+    try:
+        
+        emprestimo_livro = EmprestimoLivroRepo.obter_um(emprestimo.id)
+        print("-------------->")
+        print(emprestimo.id)
+        livro = LivroRepo.obter_um(emprestimo_livro.emprestimo_id)
+        livro.emprestado = False
+        LivroRepo.alterar(livro)
+        emprestimo_excluido = EmprestimoRepo.excluir(emprestimo.id)
+        EmprestimoLivroRepo.excluir(emprestimo.id)
+        print(EmprestimoLivroRepo.excluir(emprestimo.id))
+        print("-------------->")
+
+        
+
+        if not emprestimo_excluido:
+            raise HTTPException(status_code=400, detail="Erro ao excluir empréstimo.")
+        return {"redirect": {"url": "/excluir_emprestimo_realizado"}}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/excluir_emprestimo_realizado")
+async def get_excluir_realizado(request: Request):
+    return templates.TemplateResponse(
+        "emprestimo_excluido_realizado.html",
+        {"request": request},
     )

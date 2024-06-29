@@ -24,3 +24,16 @@ SELECT emprestimo_id, livro_id
 FROM emprestimo_livros
 
 """
+
+SQL_OBTER_UM = """
+    SELECT emprestimo_id, livro_id
+    FROM emprestimo_livros
+    WHERE emprestimo_id=?
+"""
+
+
+SQL_EXCLUIR = """
+    DELETE FROM emprestimo_livros
+    WHERE emprestimo_id=?
+
+"""

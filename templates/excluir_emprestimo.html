@@ -1,35 +1,26 @@
 {% extends "base.html" %}
 {% block subtitulo %}Cadastro{% endblock %}
 {% block conteudo %}
-<h1 class="display-5"><b>Excluir Livro</b></h1>
+<h1 class="display-5"><b>Excluir Empréstimo</b></h1>
 <hr>
-<form class="row json-form" method="post" action="/excluir_livro">
+<form class="row json-form" method="post" action="/excluir_emprestimo">
     <div class="col-12 col-lg-6">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="id" name="id"  value="{{ livro.id }}">
-            <label for="id" value = "{{livro.id}}">Id</label>
+            <input type="text" class="form-control" id="id" name="id"  value="{{ emprestimo.id }}" readonly>
+            <label for="id" value = "{{emprestimo.id}}">Id</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nome" name="nome"  value="{{ livro.nome }}">
-            <label for="nome">Título</label>
+            <input type="text" class="form-control" id="cliente_id" name="cliente_id"  value="{{ emprestimo.cliente_id }}" readonly>
+            <label for="cliente_id">Cliente ID</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="autor" name="autor" value="{{livro.autor}}">
-            <label for="autor">Autor</label>
+            <input type="text" class="form-control" id="data_emprestimo" name="data_emprestimo" value="{{emprestimo.data_emprestimo}}" readonly>
+            <label for="data_emprestimo">Data Empréstimo</label>
         </div>
 
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="descricao" name="descricao" value="{{livro.descricao}}">
-            <label for="descricao">Descricao</label>
-        </div>
-
-        <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="isbn" name="isbn" value="{{livro.isbn}}">
-            <label for="isbn">ISBN</label>
-        </div>
         <div style="margin-top: 40px; margin-bottom: 20px;">
-            <button type="submit" class="btn btn-primary btn-lg">Excluir Livro</button>
+            <button type="submit" class="btn btn-primary btn-lg">Excluir Empréstimo</button>
         </div>
         
     </div>
