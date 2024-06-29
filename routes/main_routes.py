@@ -299,11 +299,10 @@ async def get_emprestimos(request: Request):
     lista_final = []
 
     for emprestimo in lista_emprestimos:
-        nome = None
+        cliente = ClienteRepo.obter_um(emprestimo.cliente_id)
+        nome = cliente.nome
+        print("----------> CLIENTE NOME", nome)
         livro_selecionado = None
-        for cliente in lista_clientes:
-            if emprestimo.id == cliente.id:                    
-                nome = cliente.nome
         for elivro in lista_emprestimos_livro:
             if emprestimo.id == elivro.id:
                 for livro in lista_livros:
@@ -379,8 +378,8 @@ async def post_excluir_emprestimo(emprestimo: Emprestimo):
         livro = LivroRepo.obter_um(emprestimo_livro.emprestimo_id)
         livro.emprestado = False
         LivroRepo.alterar(livro)
-        emprestimo_excluido = EmprestimoRepo.excluir(emprestimo.id)
         EmprestimoLivroRepo.excluir(emprestimo.id)
+        emprestimo_excluido = EmprestimoRepo.excluir(emprestimo.id)
         print(EmprestimoLivroRepo.excluir(emprestimo.id))
         print("-------------->")
 
