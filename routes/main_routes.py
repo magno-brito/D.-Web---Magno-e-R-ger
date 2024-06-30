@@ -50,9 +50,18 @@ async def get_html(arquivo: str):
 async def get_root(request: Request):
     livros = LivroRepo.obter_todos()
     return templates.TemplateResponse(
+        "sobre.html",
+        {"request": request, "livros": livros},
+    )
+
+@router.get("/principal")
+async def get_root(request: Request):
+    livros = LivroRepo.obter_todos()
+    return templates.TemplateResponse(
         "index.html",
         {"request": request, "livros": livros},
     )
+
 
 
 @router.get("/contato")
@@ -179,9 +188,6 @@ async def get_excluir_realizado(request: Request, id: int):
     emprestimo_livros = EmprestimoLivroRepo.obter_todos()
     cliente_emprestimos = []
     lista_final = []
-
-    teste = EmprestimoLivroRepo.obter_um(6)
-    print(teste)
     
     for emprestimo in emprestimos:
         if emprestimo.cliente_id == cliente.id:
@@ -404,14 +410,13 @@ async def post_excluir_emprestimo(emprestimo: Emprestimo):
         print("-------------->")
         print(emprestimo.id)
         livro = LivroRepo.obter_um(emprestimo_livro.emprestimo_id)
+        print('--------->LIVRO',livro)
         livro.emprestado = False
         LivroRepo.alterar(livro)
         EmprestimoLivroRepo.excluir(emprestimo.id)
         emprestimo_excluido = EmprestimoRepo.excluir(emprestimo.id)
         print(EmprestimoLivroRepo.excluir(emprestimo.id))
         print("-------------->")
-
-        
 
         if not emprestimo_excluido:
             raise HTTPException(status_code=400, detail="Erro ao excluir empréstimo.")

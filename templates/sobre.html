@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block subtitulo %}Sobre{% endblock %}
+{% block conteudo %}
+<div class="container">
+    <section>
+        <h2>Sobre o Projeto</h2>
+        <p>LivroLândia é um projeto dedicado a facilitar o empréstimo de livros entre os amantes da leitura. Nosso objetivo é criar uma comunidade onde os leitores possam realizar a leitura de seus livros favoritos e descobrir novos títulos através de empréstimos. Acreditamos que o conhecimento deve ser acessível a todos, e nossa plataforma permite que os usuários encontrem e peçam emprestado livros de uma ampla variedade de gêneros e autores.</p>
+        <p>Esse projeto é um trabalho da disciplina de Desenvolvimento Web ministrada pelo professor Ricardo Maróquio da instituição IFES - Campus Cachoeiro de Itapemirim.</p>
+    </section>
+
+    <section>
+        <h2>Desenvolvedores</h2>
+        <div class="developers">
+            <div class="developer">
+                <img style="height: 250px;" src="../static/img/foto-magno.png" alt="Magno Brito">
+                <h3>Magno Brito</h3>
+                <a href="https://www.linkedin.com/in/magnolealbrito/" class="linkedin-link">LinkedIn</a>
+            </div>
+            <div class="developer">
+                <img style="height: 250px;" src="../static/img/foto-Roger.png" alt="Róger Corrente">
+                <h3>Róger Corrente</h3>
+                <a href="https://www.linkedin.com/in/roger-corrente-pinto-464781208/" class="linkedin-link">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script src="/static/js/formToJson.js"></script>
+{% endblock %}

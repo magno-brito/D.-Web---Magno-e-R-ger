@@ -39,3 +39,144 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+
+
+footer * {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    color: white;
+}
+
+footer {
+    background: #343434;
+    padding-top: 50px;
+}
+
+footer .container {
+    width: 1140px;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.footer-content {
+    width: 33.3%;
+}
+
+footer h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.footer-content p {
+    width: 190px;
+    margin: auto;
+    padding: 7px;
+}
+
+.footer-content ul {
+    text-align: center;
+}
+
+footer .list {
+    padding: 0;
+}
+
+footer .list li {
+    width: auto;
+    text-align: center;
+    list-style-type: none;
+    padding: 7px;
+    position: relative;
+}
+
+footer .list li::before {
+    content: '';
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 100%;
+    width: 0;
+    height: 2px;
+    background: #f18930;
+    transition-duration: .5s;
+}
+
+footer .list li:hover::before {
+    width: 70px;
+}
+
+.social-icons {
+    text-align: right;
+    padding: 0;
+}
+
+.social-icons li {
+    display: inline-block;
+    padding: 5px;
+}
+
+.social-icons i {
+    color: white;
+    font-size: 25px;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #f18930;
+}
+
+.social-icons i:hover {
+    color: #f18930;
+}
+
+footer .bottom-bar {
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 50px;
+}
+
+footer .bottom-bar p {
+    color: #343434;
+    margin: 0;
+    font-size: 16px;
+    padding: 7px;
+}
+
+.nav-laranja{
+    background-color: #f18930;
+}
+
+
+
+.developers {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.developer {
+    background: #fff;
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 45%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+.developer img {
+    border-radius: 50%;
+    height: 150px;
+}
+
+.linkedin-link {
+    display: block;
+    margin-top: 10px;
+    color: #0077b5;
+    text-decoration: none;
+}

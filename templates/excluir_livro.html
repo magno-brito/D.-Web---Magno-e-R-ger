@@ -1,31 +1,31 @@
 {% extends "base.html" %}
 {% block subtitulo %}Cadastro{% endblock %}
 {% block conteudo %}
-<h1 class="display-5"><b>Excluir Empréstimo</b></h1>
+<h1 class="display-5"><b>Excluir Livro</b></h1>
 <hr>
 <form class="row json-form" method="post" action="/excluir_livro">
     <div class="col-12 col-lg-6">
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="id" name="id"  value="{{ livro.id }}">
+            <input type="text" class="form-control" id="id" name="id"  value="{{ livro.id }}" readonly>
             <label for="id" value = "{{livro.id}}">Id</label>
         </div>
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="nome" name="nome"  value="{{ livro.nome }}">
+            <input type="text" class="form-control" id="nome" name="nome"  value="{{ livro.nome }}" readonly>
             <label for="nome">Título</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="autor" name="autor" value="{{livro.autor}}">
+            <input type="text" class="form-control" id="autor" name="autor" value="{{livro.autor}}" readonly>
             <label for="autor">Autor</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="descricao" name="descricao" value="{{livro.descricao}}">
+            <input type="text" class="form-control" id="descricao" name="descricao" value="{{livro.descricao}}" readonly>
             <label for="descricao">Descricao</label>
         </div>
 
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="isbn" name="isbn" value="{{livro.isbn}}">
+            <input type="text" class="form-control" id="isbn" name="isbn" value="{{livro.isbn}}" readonly>
             <label for="isbn">ISBN</label>
         </div>
         <div style="margin-top: 40px; margin-bottom: 20px;">
