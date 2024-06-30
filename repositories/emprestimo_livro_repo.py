@@ -93,5 +93,6 @@ class EmprestimoLivroRepo:
         except sqlite3.Error as ex:
             print(ex)
             return False
-
+    
+   
 

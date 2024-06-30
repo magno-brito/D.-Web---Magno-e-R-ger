@@ -32,6 +32,8 @@ SQL_OBTER_UM = """
 """
 
 
+
+
 SQL_EXCLUIR = """
     DELETE FROM emprestimo_livros
     WHERE emprestimo_id=?

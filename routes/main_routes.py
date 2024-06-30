@@ -169,6 +169,34 @@ async def get_excluir_realizado(request: Request):
         {"request": request},
     )
 
+#--------------------------------------------- CLIENTE/MOSTRAR EMPRÉSTIMOS
+
+@router.get("/cliente/meus_emprestimos/{id}")
+async def get_excluir_realizado(request: Request, id: int):
+    cliente = ClienteRepo.obter_um(id)
+    
+    emprestimos = EmprestimoRepo.obter_todos()
+    emprestimo_livros = EmprestimoLivroRepo.obter_todos()
+    cliente_emprestimos = []
+    lista_final = []
+
+    teste = EmprestimoLivroRepo.obter_um(6)
+    print(teste)
+    
+    for emprestimo in emprestimos:
+        if emprestimo.cliente_id == cliente.id:
+            for emprestimo_livro in emprestimo_livros:
+                if emprestimo.id == emprestimo_livro.id:
+                    livro = LivroRepo.obter_um(emprestimo_livro.emprestimo_id)
+                    print(livro)
+                    lista_final.append([emprestimo.data_emprestimo, livro.nome])
+    
+    return templates.TemplateResponse(
+        "emprestimos_cliente.html",
+        {"request": request, "lista_final": lista_final},
+    )
+
+
 
 
 @router.get("/entrar")
