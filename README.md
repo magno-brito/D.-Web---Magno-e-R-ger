@@ -1,10 +1,3 @@
-# Trabalho de Desenvolvimento Web - Magno e Róger
-Poste aqui o link do repositório GitHub do trabalho final da disciplina. O trabalho consiste no desenvolvimento de uma aplicação web para algum resolver algum problema que demande autenticação de usuário e pelo menos duas entidades que possuam um relacionamento de 1 para N (um para muitos), sendo que a entidade forte deve pertencer ao usuário que a criou. Como exemplo, imagine uma aplicação multiusuário para gerenciamento de tarefas. Cada usuário tem acesso ao CRUD somente das suas próprias tarefas e cada tarefa está vinculada a uma categoria.
-
-## Resenha de filme
-O usuário cria cadastro na página web. Com seu login ele pode escolher um filme e fazer uma resenha sobre o mesmo
-
-Entidades:
-- Usuário
-- Filme
-- Resenha
+# Livrolandia: Magno e Róger
+ LivroLândia é um projeto dedicado a facilitar o empréstimo de livros entre os amantes da leitura. Nosso objetivo é criar uma comunidade onde os leitores possam realizar a leitura de seus livros favoritos e descobrir novos títulos através de empréstimos. Acreditamos que o conhecimento deve ser acessível a todos, e nossa plataforma permite que os usuários encontrem e peçam emprestado livros de uma ampla variedade de gêneros e autores. Esse projeto é um trabalho da disciplina de Desenvolvimento Web ministrada pelo professor Ricardo Maróquio da instituição IFES - Campus Cachoeiro de Itapemirim.
+  
